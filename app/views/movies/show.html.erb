@@ -1,0 +1,44 @@
+<section class="movie-details">
+    <div class="image">
+      <%= image_tag @movie.image_file_name, class:"image" %>
+    </div>
+    <div class="details">  
+      </div>
+      <h2>
+        <%= @movie.title %>
+      </h2>
+      <h3>
+        <%= total_gross(@movie) %>
+      </h3>
+      <p>
+        <%= truncate(@movie.description, length: 150, separator: ' ') %>
+      </p>
+    </div>
+    <table>
+      <tr>
+        <th>Director:</th>
+        <td><%= @movie.director %></td>
+      </tr>
+      <tr>
+        <th>Duration:</th>
+        <td><%= @movie.duration %></td>
+      </tr>
+      <tr>
+        <th>Total Gross:</th>
+        <td><%= total_gross(@movie) %></td>
+      </tr>
+    </table>
+  </div>
+</section>
+<div class="details">  
+  <%= render "reviews/form", movie: @movie, review: @review %>
+  
+</div>
+
+
+<section class="admin">
+  <%= link_to "Edit", edit_movie_path(@movie), class: "button" %>
+  <%= link_to "delete", @movie, class: "button", data: {turbo_method: :delete, turbo_confirm: "Are you sure you'd like to delete this?"} %>
+  <%= link_to "reviews (#{@movie.reviews.count})", movie_reviews_path(@movie), class: "button" %>
+  <%= link_to pluralize(@movie.reviews.count, "review"), movie_reviews_path(@movie), class: "button" %>
+</section>
