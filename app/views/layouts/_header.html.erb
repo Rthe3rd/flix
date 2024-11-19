@@ -1,10 +1,32 @@
 <header>
   <nav>
     <%= link_to image_tag( "logo.png"), root_path %>
-    <ul>
+    <ul class="left">
       <li>
-        <%= link_to "See Movies!", movies_path %>
+        <%= link_to "All Movies", movies_path %>
       </li>
-    <ul>
+      <li>
+        <%= link_to "All Users", users_path %>
+      </li>
+    </ul>
+    <ul class="right">
+      <li>
+        <%# <%= link_to "Sign in", herf='/signin', class: "button" %>
+        <% if current_user  %>
+          <li>
+            <%= link_to current_user.name, current_user, class: "btn btn-primary" %>
+          </li>
+          <li>
+            <%= link_to "Account settings", edit_user_path(current_user), class: "btn btn-primary" %>
+          </li>
+          <li>
+            <%= link_to "Sign out", session_path, class: "btn btn-danger", data: { turbo_method: :delete } %>
+          </li>
+        <% else %>
+          <%= link_to "Sign in", signin_path, class: "button" %>
+          <%= link_to "Sign Up", signup_path, class: "button" %>
+        <% end %>
+      </li>
+    </ul>
   </nav>
 </header>
