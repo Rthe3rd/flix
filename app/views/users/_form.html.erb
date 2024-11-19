@@ -1,0 +1,27 @@
+<%= form_with(model: user) do |f| %>
+
+  <%= render "shared/errors", object: user %>
+
+  <%= f.label :name  %>
+  <%= f.text_field :name, autofocus: true %>
+
+  <%= f.label :username  %>
+  <%= f.text_field :username, prompt: "Alphanumeric characters only!" %>
+
+  <%= f.label :email %>
+  <%= f.text_field :email, rows: 10 %>
+
+  <%= f.label :password %>
+  <%= f.password_field :password, prompt: "please enter a password" %>
+  
+  <%= f.label :password_confirmation %>
+  <%= f.password_field :password_confirmation, prompt: "please confirm your password" %>
+
+  <% if user.new_record? %>
+    <%= f.submit "Create Account" %>
+  <% else %>
+    <%= f.submit "Update Account" %>
+    <%= link_to "Delete", user_path(user), class: "button delete",
+          data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
+  <% end %>
+<% end %>
