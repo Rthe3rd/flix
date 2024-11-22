@@ -1,7 +1,9 @@
 class Review < ApplicationRecord
   belongs_to :movie
+  belongs_to :user
 
-  validates :name, presence: true
+  # removed the name validation as reviews will only be created by signed in users
+  # validates :name, presence: true
 
   validates :comment, length: { minimum: 4}
 
