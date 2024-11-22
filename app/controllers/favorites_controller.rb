@@ -18,7 +18,6 @@ class FavoritesController < ApplicationController
     redirect_to set_method
   end
 
-
 private
   def set_method
     @movie = Movie.find(params[:movie_id])
