@@ -6,35 +6,44 @@
   <h6>Singed up on <%= @user.created_at.strftime("%B %Y") %></h5> 
 
 
-<div class="actions">
-  <% if current_user?(@user) %>
-  <%= link_to "Update Your Account Info!", edit_user_path( @user), class: 'btn btn-primary' %>
-  <% if current_user_admin? %>
-    <%= link_to "Delete", user_path(@user), class: "btn btn-danger",
-            data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
+  <div class="actions">
+    <% if current_user?(@user) %>
+    <%= link_to "Update Your Account Info!", edit_user_path( @user), class: 'btn btn-primary' %>
+    <% if current_user_admin? %>
+      <%= link_to "Delete", user_path(@user), class: "btn btn-danger",
+              data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
+      <% end %>
     <% end %>
-  <% end %>
 
-  <ul class="reviews">
-  <% if @reviews.present? %>
-    <h3>Reviews</h3>
-    <% @reviews.each do |review| %>
-      <div class="review">
-        <div class="details">
-          <span class="title">
-            <%= link_to review.movie.title, review.movie %>
-          </span>
-          <%= pluralize(review.stars, 'star') %>
-          <span class="date">
-            <%= time_ago_in_words(review.created_at) %> ago
-          </span>
-          <p>
-            <%= review.comment %>
-          </p>
+    <ul class="reviews">
+    <% if @reviews.present? %>
+      <h3>Reviews</h3>
+      <% @reviews.each do |review| %>
+        <div class="review">
+          <div class="details">
+            <span class="title">
+              <%= link_to review.movie.title, review.movie %>
+            </span>
+            <%= pluralize(review.stars, 'star') %>
+            <span class="date">
+              <%= time_ago_in_words(review.created_at) %> ago
+            </span>
+            <p>
+              <%= review.comment %>
+            </p>
+          </div>
         </div>
-      </div>
+      <% end %>
     <% end %>
-  <% end %>
-
-</div>
+  </div>
+    <aside class="fans">
+      <% if @favorite_movies.present? %>
+        <h3>Favorite Movies</h3>
+        <div class="favorite-movies">
+          <% @favorite_movies.each do |movie| %>
+            <%= link_to image_tag(movie.image_file_name), movie %>
+          <% end %>
+        </div>
+      <% end %>
+  </aside>
 </section>
