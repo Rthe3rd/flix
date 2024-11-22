@@ -2,8 +2,9 @@
 
   <%= render "shared/errors", object: @review %>
 
-  <%=f.label :name %>
-  <%=f.text_field :name, autofocus: true %>
+  <%# Only signed in users can add reviews and thus we do no need to have an label/input field for it %>
+  <%# <%=f.label :name %>
+  <%# <%=f.text_field :name, autofocus: true %>
 
   <%# <%=f.select :stars, Review::STARS, prompt: "Pick one!" %> 
   <div class="legend">Stars</div>
