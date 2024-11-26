@@ -31,6 +31,7 @@ class MoviesController < ApplicationController
     @movie = Movie.find(params[:id])
     @review = @movie.reviews.new
     @fans = @movie.fans
+    @genres = @movie.genres.order(:name)
     if current_user
       @favorite = current_user.favorites.find_by(movie_id: @movie.id)
     end
@@ -40,7 +41,7 @@ class MoviesController < ApplicationController
     @movie = Movie.find(params[:id])
   end
 
-  def update 
+  def update
     @movie = Movie.find(params[:id])
     if @movie.update(movie_params)
       # Both of the following are valid to re-direct to the show page for edited record
@@ -67,7 +68,7 @@ class MoviesController < ApplicationController
 
   private
     def movie_params
-      params.require(:movie).permit(:title, :description, :rating, :released_on, :total_gross, :director, :duration, :image_file_name)
+      params.require(:movie).permit(:title, :description, :rating, :released_on, :total_gross, :director, :duration, :image_file_name, genre_ids: [])
     end
 
 end
