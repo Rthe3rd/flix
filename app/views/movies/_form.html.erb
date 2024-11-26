@@ -28,6 +28,10 @@
   <%= f.label :total_gross %>
   <%= f.number_field :total_gross, rows: 5 %>
 
+  <div class="checkboxes">
+    <%= f.collection_check_boxes(:genre_ids, Genre.order(:name), :id, :name) %>
+  </div>
+
   <%= f.submit %>
 
 <% end %>
