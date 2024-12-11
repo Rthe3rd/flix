@@ -2,10 +2,23 @@ class MoviesController < ApplicationController
 
   before_action :require_signin, except: [:show, :index]
   before_action :require_admin, except: [:show, :index]
+  before_action :set_movie, only: [:show, :edit, :update, :destroy]
+  
 
   def index
     # @movies = Movie.all
-    @movies = Movie.released
+    case params[:filter] 
+      when "upcoming"
+        @movies = Movie.upcoming
+      when "recent"
+        @movies = Movie.recent
+      when "flops"
+        @movies = Movie.flops
+      when "hits"
+        @movies = Movie.hits
+      else
+        @movies = Movie.released
+    end
   end
 
   def new
@@ -28,7 +41,6 @@ class MoviesController < ApplicationController
   end
 
   def show
-    @movie = Movie.find(params[:id])
     @review = @movie.reviews.new
     @fans = @movie.fans
     @genres = @movie.genres.order(:name)
@@ -71,4 +83,7 @@ class MoviesController < ApplicationController
       params.require(:movie).permit(:title, :description, :rating, :released_on, :total_gross, :director, :duration, :image_file_name, genre_ids: [])
     end
 
+    def set_movie
+      @movie = Movie.find_by!(slug: params[:id])
+    end 
 end
