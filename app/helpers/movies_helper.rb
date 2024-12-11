@@ -1,5 +1,13 @@
 module MoviesHelper
 
+  def nav_link_to(text, url)
+    if current_page?(url)
+      link_to(text, url, class: "active")
+    else
+      link_to(text, url)
+    end 
+  end
+
   def total_gross(movie)
     if movie.is_flop?
       "This movie is a total Flop!"

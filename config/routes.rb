@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
   resources :genres
-
+  resources :users
+  root "movies#index"
   
   get "up" => "rails/health#show", as: :rails_health_check
   
-  root "movies#index"
   # # Note that this is above the other actions
   # get "movies/new" => "movies#new", as: "new_movie"
   
@@ -19,6 +19,9 @@ Rails.application.routes.draw do
   # #   i.e. no as: "update_movie"
   # patch "movie/:id" => "movies#update"
   
+  get "movies/filter/:filter" => "movies#index", as: :filtered_movies
+  get "genres/:genre" => "movies#show", as: :movies_by_genre
+
   resources :movies do 
     resources :reviews
     resources :favorites, only: [:create, :destroy]
@@ -28,7 +31,7 @@ Rails.application.routes.draw do
   # so that we can go to natural /"signin" for a sign in page
   get "signin" => "sessions#new" 
 
-  resources :users
+
   # so that we can go to natural /"signup" for a sign up page
   get "signup" => "users#new" 
 
