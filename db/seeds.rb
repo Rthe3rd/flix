@@ -175,7 +175,7 @@ Movie.create!([
   }
 ])
 
-Genres.create!([
+Genre.create!([
   Genre.create(name: "Comedy"),
   Genre.create(name: "Drama"),
   Genre.create(name: "Romance"),
