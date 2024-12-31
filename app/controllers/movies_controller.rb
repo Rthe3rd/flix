@@ -1,8 +1,8 @@
 class MoviesController < ApplicationController
 
+  before_action :set_movie, only: [:show, :edit, :update, :destroy]
   before_action :require_signin, except: [:show, :index]
   before_action :require_admin, except: [:show, :index]
-  before_action :set_movie, only: [:show, :edit, :update, :destroy]
   
 
   def index
@@ -50,11 +50,13 @@ class MoviesController < ApplicationController
   end
 
   def edit
-    @movie = Movie.find(params[:id])
+    # # Since we have moved the set_movie call_back before the other callbacks, we do not specficy the movie here/get it by params[id]
+    # @movie = Movie.find(params[:id])
   end
-
+  
   def update
-    @movie = Movie.find(params[:id])
+    # # Since we have moved the set_movie call_back before the other callbacks, we do not specficy the movie here/get it by params[id]
+    # @movie = Movie.find(params[:id])
     if @movie.update(movie_params)
       # Both of the following are valid to re-direct to the show page for edited record
       # redirect_to movie_path(movie)
@@ -67,7 +69,8 @@ class MoviesController < ApplicationController
   end
   
   def destroy
-    @movie = Movie.find(params[:id])
+    # Since we have moved the set_movie call_back before the other callbacks, we do not specficy the movie here/get it by params[id]
+    # @movie = Movie.find(params[:id])
     @movie.destroy!
     redirect_to movies_url, status: :see_other, alert: "Movie Successfully Created!"
 
@@ -80,7 +83,7 @@ class MoviesController < ApplicationController
 
   private
     def movie_params
-      params.require(:movie).permit(:title, :description, :rating, :released_on, :total_gross, :director, :duration, :image_file_name, genre_ids: [])
+      params.require(:movie).permit(:title, :description, :rating, :released_on, :total_gross, :director, :duration, :main_image, genre_ids: [])
     end
 
     def set_movie

@@ -10,6 +10,9 @@ class Movie < ApplicationRecord
   has_many :characterizations, dependent: :destroy
   has_many :genres, through: :characterizations
 
+  has_one_attached :main_image
+  has_one :attachment, through: :active_storage_attachments
+
   validates :title, presence: true, uniqueness: true
   validates :released_on, :duration, presence: true
 

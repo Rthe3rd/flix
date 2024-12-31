@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
 
   before_action :require_signin, except: [:new, :create]
+  before_action :set_username, only: [:show, :edit, :update]
   before_action :require_correct_user, only: [:edit, :update]
   before_action :require_admin, only: [:destroy]
-  before_action :set_username, only: [:show]
 
   def index
     # @users = User.all
@@ -64,13 +64,19 @@ private
 
   def require_correct_user
     # @user finds the user based on the params hash which is different than the session hash in which current_user? makes a comparision to
-    @user = User.find(params[:id])
+    # Since we have moved the set_username call_back before the require_correct_user callback, we do not specficy the user here
+    # @user = User.find(params[:id])
     redirect_to movies_url, status: :see_other unless current_user?(@user)
     # this line roughly translates to: @current_user ||= User.find(session[:user_id]) if session[:user_id] == @user
   end
 
   def set_username
     @user = User.find_by!(username: params[:id])
+    # @user = User.find_by!(slug: params[:id])
   end
+
+  # def set_movie
+  #   @movie = Movie.find_by!(slug: params[:id])
+  # end 
 
 end
