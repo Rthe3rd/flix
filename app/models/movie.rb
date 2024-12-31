@@ -20,6 +20,8 @@ class Movie < ApplicationRecord
 
   validates :total_gross, comparison: { greater_than_or_equal_to: 0 }
 
+  validate :acceptable_image
+
   RATINGS = %w(G PG PG-13 R NC-17)
   validates :rating, inclusion: { in: RATINGS, message: "Not a valid rating"}
 
@@ -59,6 +61,18 @@ class Movie < ApplicationRecord
   # note you are setting the slug attribute (self.slug) vs. just some variable named slug
     def set_slug
       self.slug = title.parameterize
+    end
+
+    def acceptable_image
+      return unless main_image.attached?
+      
+      unless main_image.blob.byte_size <= 1.megabytes
+        errors.add(:main_image, "File is too large! File size limit is 1MB")
+      end
+      acceptable_types = ['image/jpeg', 'image/png']
+      unless acceptable_types.include?(main_image.blob.content_type)
+        errors.add(:main_image, "Invalid file type. Must be JPEG or PNG")
+      end
     end
 
 end 
