@@ -80,3 +80,4 @@ gem 'dartsass-sprockets'
   #   config.sass.inline_source_maps = true
 gem 'jquery-rails'
 
+gem 'aws-sdk-s3'
